@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../assets/assets.js";
 import Input from "../components/Input.jsx";
 import axiosConfig from "../Util/axiosConfig.jsx";
-import { OwnContext } from "../context/AppContext.jsx";
+import { AppContext } from "../context/AppContext.jsx";
 import toast from "react-hot-toast";
 import { validateEmail } from "../Util/validation.js";
 import { LoaderCircle } from "lucide-react";
@@ -16,7 +16,7 @@ function Login() {
 	const [loading, setLoading] = useState(false);
 	const navigate = useNavigate();
 
-	const { setUser } = useContext(OwnContext);
+	const { setUser } = useContext(AppContext);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();

@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 import { Toaster } from "react-hot-toast";
 import Income from "./pages/Income";
@@ -8,8 +8,8 @@ import Filter from "./pages/Filter";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Expense from "./pages/Expense";
-import AppContext from "./context/AppContext";
 import AppContextProvider from "./context/AppContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
 	console.log("Hello App!");
@@ -19,13 +19,49 @@ function App() {
 			<AppContextProvider>
 				<BrowserRouter>
 					<Routes>
-						<Route path="/dashboard" element={<Home />} />
-						<Route path="/income" element={<Income />} />
-						<Route path="/expense" element={<Expense />} />
-						<Route path="/category" element={<Category />} />
-						<Route path="/filter" element={<Filter />} />
+						<Route path="/" element={<Navigate to="/dashboard" replace />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/signup" element={<Signup />} />
+						<Route
+							path="/dashboard"
+							element={
+								<ProtectedRoute>
+									<Home />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/income"
+							element={
+								<ProtectedRoute>
+									<Income />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/expense"
+							element={
+								<ProtectedRoute>
+									<Expense />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/category"
+							element={
+								<ProtectedRoute>
+									<Category />
+								</ProtectedRoute>
+							}
+						/>
+						<Route
+							path="/filter"
+							element={
+								<ProtectedRoute>
+									<Filter />
+								</ProtectedRoute>
+							}
+						/>
 					</Routes>
 				</BrowserRouter>
 			</AppContextProvider>

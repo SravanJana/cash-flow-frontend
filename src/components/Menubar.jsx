@@ -1,15 +1,21 @@
 import { useContext, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, User, X } from "lucide-react";
+import { LogOut, Menu, User, X } from "lucide-react";
 import { assets } from "../assets/assets";
-import { OwnContext } from "../context/AppContext";
+import { AppContext } from "../context/AppContext";
 
 function Menubar() {
 	const [openSideMenu, setOpenSideMenu] = useState(false);
 	const [showDropdown, setShowDropdown] = useState(false);
 	const dropDownRef = useRef(null);
-	const { user } = useContext(OwnContext);
+	const { user ,clearUser} = useContext(AppContext);
 	const navigate = useNavigate();
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+        setShowDropdown(false);
+        clearUser();
+		navigate("/login");
+	};
 
 	return (
 		<div className="flex items-center justify-between gap-5 bg-white border-b border-gray-200/50 backdrop-blur-[2px] px-4 py-4 sm:px-7 sticky top">
@@ -58,14 +64,25 @@ function Menubar() {
 									<User className="text-purple-600 w-4 h-4" />
 								</div>
 								<div className="flex-1 min-w-0">
-                                    <p className="text-sm font-medium text-gray-800 truncate">
-                                        {user.fullName}
-                                    </p>
+									<p className="text-sm font-medium text-gray-800 truncate">
+										{user.fullName}
+									</p>
 
-                                    <p className="text-xs text-gray-500 truncate">
-                                        {user.email}
-                                    </p>
-                                </div>
+									<p className="text-xs text-gray-500 truncate">
+										{user.email}
+									</p>
+								</div>
+							</div>
+
+							{/* dropdown menu items */}
+							<div className="py-1">
+								<button
+									onClick={handleLogout}
+									className="flex items-center gap-3 w-full px-2 py-2 text-sm text-gray-700 hover:bg-gray-50 transition-colors duration-150"
+								>
+									<LogOut className="w-4 h-4 text-gray-500 " />
+									<span>Logout</span>
+								</button>
 							</div>
 						</div>
 					</div>
