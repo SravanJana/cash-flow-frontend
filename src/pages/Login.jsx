@@ -40,10 +40,11 @@ function Login() {
 				password: password,
 			});
 
-			const { token, user } = response.data;
+			const { token, User } = response.data;
 			if (token) {
 				localStorage.setItem("token", token);
-				setUser(user);
+				setUser(User);
+                console.log(`User Data ` +  User)
 				navigate("/dashboard");
 			}
 		} catch (error) {

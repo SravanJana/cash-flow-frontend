@@ -9,13 +9,14 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Expense from "./pages/Expense";
 import AppContext from "./context/AppContext";
+import AppContextProvider from "./context/AppContext";
 
 function App() {
 	console.log("Hello App!");
 	return (
 		<>
 			<Toaster />
-			<AppContext>
+			<AppContextProvider>
 				<BrowserRouter>
 					<Routes>
 						<Route path="/dashboard" element={<Home />} />
@@ -27,7 +28,7 @@ function App() {
 						<Route path="/signup" element={<Signup />} />
 					</Routes>
 				</BrowserRouter>
-			</AppContext>
+			</AppContextProvider>
 		</>
 	);
 }
