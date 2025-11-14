@@ -1,6 +1,10 @@
+import Dashboard from "../components/Dashboard";
+
 function Income() {
-  return (
-    <div>Income</div>
-  )
+  return(
+         <Dashboard activeMenu = "Income">
+                This is Income page
+        </Dashboard>
+    );
 }
 export default Income

@@ -1,21 +1,37 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LogOut, Menu, User, X } from "lucide-react";
 import { assets } from "../assets/assets";
 import { AppContext } from "../context/AppContext";
-
+import Sidebar from "./Sidebar";
 function Menubar() {
 	const [openSideMenu, setOpenSideMenu] = useState(false);
 	const [showDropdown, setShowDropdown] = useState(false);
 	const dropDownRef = useRef(null);
-	const { user ,clearUser} = useContext(AppContext);
+	const { user, clearUser } = useContext(AppContext);
 	const navigate = useNavigate();
 	const handleLogout = () => {
 		localStorage.removeItem("token");
-        setShowDropdown(false);
-        clearUser();
+		setShowDropdown(false);
+		clearUser();
 		navigate("/login");
 	};
+
+	useEffect(() => {
+		const handleClickOutside = (event) => {
+			if (
+				dropDownRef.current &&
+				!dropDownRef.current.contains(event.target)
+			) {
+				setShowDropdown(false);
+			}
+		};
+
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, [showDropdown]);
 
 	return (
 		<div className="flex items-center justify-between gap-5 bg-white border-b border-gray-200/50 backdrop-blur-[2px] px-4 py-4 sm:px-7 sticky top">
@@ -53,6 +69,11 @@ function Menubar() {
 					className="flex items-center justify-center w-10 h-10 hover:bg-gray-200 rounded-full transition-colors duration-200 focus:ring-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2"
 				>
 					<User className="text-purple-500 w-6 h-6" />
+					<img
+						src={user?.profileImageUrl}
+						alt="Profile"
+						className="w-10 h-10 rounded-full object-cover"
+					/>
 				</button>
 
 				{/* Dropdown Menu */}
@@ -61,7 +82,11 @@ function Menubar() {
 						<div className="px-4 py-3 border-b border-gray-100">
 							<div className="flex items-center gap-3">
 								<div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-									<User className="text-purple-600 w-4 h-4" />
+									<img
+										src={user?.profileImageUrl}
+										alt="Profile"
+										className="w-8 h-8 rounded-full object-cover"
+									/>
 								</div>
 								<div className="flex-1 min-w-0">
 									<p className="text-sm font-medium text-gray-800 truncate">
@@ -89,7 +114,11 @@ function Menubar() {
 				)}
 			</div>
 			{/* Mobile side view  */}
-			<span>Menubar Mobile Side</span>
+			{openSideMenu && (
+				<div className="fixed left-0 right-0 bg-white border-b border-gray-200 lg:hidden z-20 top-[73px]">
+					<Sidebar />
+				</div>
+			)}
 		</div>
 	);
 }

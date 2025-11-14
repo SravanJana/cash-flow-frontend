@@ -1,6 +1,10 @@
+import Dashboard from "../components/Dashboard";
+
 function Expense() {
   return (
-    <div>Expense</div>
-  )
+         <Dashboard activeMenu = "Expense">
+                This is Expense page
+        </Dashboard>
+    );
 }
 export default Expense
