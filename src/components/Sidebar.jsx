@@ -17,9 +17,9 @@ function Sidebar({ activeMenu }) {
 						className="w-20 h-20 bg-slate-400 rounded-full object-cover"
 					/>
 				) : (
-					<User className="w-20 h-20 text-slate-400 text-xl" />
+					<User className="w-20 h-20 text-purple-400 text-xl border-2 border-purple-400 rounded-full p-3 " />
 				)}
-				<h5 className="text-gray-950 font-medium text-xl leading-6">
+				<h5 className="text-gray-950 font-medium text-xl leading-6 ">
 					{user?.fullName}
 				</h5>
 			</div>

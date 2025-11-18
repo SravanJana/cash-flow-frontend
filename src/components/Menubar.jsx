@@ -55,7 +55,7 @@ function Menubar() {
 						alt="logo"
 						className="h-10 w-10"
 					/>
-					<span className="text-lg font-medium text-black truncate">
+					<span className="text-lg font-bold text-black truncate">
 						Cash Flow
 					</span>
 				</div>
@@ -68,12 +68,15 @@ function Menubar() {
 					onClick={() => setShowDropdown(!showDropdown)}
 					className="flex items-center justify-center w-10 h-10 hover:bg-gray-200 rounded-full transition-colors duration-200 focus:ring-purple-800 focus:outline-none focus:ring-2 focus:ring-offset-2"
 				>
-					<User className="text-purple-500 w-6 h-6" />
-					<img
-						src={user?.profileImageUrl}
-						alt="Profile"
-						className="w-10 h-10 rounded-full object-cover"
-					/>
+					{user.profileImageUrl ? (
+						<img
+							src={user?.profileImageUrl}
+							alt="Profile"
+							className="w-10 h-10 rounded-full object-cover"
+						/>
+					) : (
+						<User className="text-purple-500 w-6 h-6" />
+					)}
 				</button>
 
 				{/* Dropdown Menu */}
@@ -82,11 +85,15 @@ function Menubar() {
 						<div className="px-4 py-3 border-b border-gray-100">
 							<div className="flex items-center gap-3">
 								<div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
-									<img
-										src={user?.profileImageUrl}
-										alt="Profile"
-										className="w-8 h-8 rounded-full object-cover"
-									/>
+									{user.profileImageUrl ? (
+										<img
+											src={user?.profileImageUrl}
+											alt="Profile"
+											className="w-8 h-8 rounded-full object-cover"
+										/>
+									) : (
+										<User className="text-purple-500 w-6 h-6" />
+									)}
 								</div>
 								<div className="flex-1 min-w-0">
 									<p className="text-sm font-medium text-gray-800 truncate">
