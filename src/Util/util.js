@@ -40,9 +40,36 @@ export const prepareIncomeLineChartData = (incomeData) => {
 	const chartData = Object.keys(dateToAmountMap).map((date) => ({
 		date,
 		amount: dateToAmountMap[date],
-        items: incomeData.filter(income => income.date === date),
-        // i want like this 6 th Jul, 
-        month: new Date(date).toLocaleString('en-IN', { day: 'numeric', month: 'short' }),
+		items: incomeData.filter((income) => income.date === date),
+		// i want like this 6 th Jul,
+		month: new Date(date).toLocaleString("en-IN", {
+			day: "numeric",
+			month: "short",
+		}),
+	}));
+	return chartData;
+};
+
+export const prepareExpenseLineChartData = (expenseData) => {
+	const dateToAmountMap = {};
+	expenseData.forEach((expense) => {
+		const date = expense.date;
+		if (dateToAmountMap[date]) {
+			dateToAmountMap[date] += expense.amount;
+		} else {
+			dateToAmountMap[date] = expense.amount;
+		}
+	});
+
+	const chartData = Object.keys(dateToAmountMap).map((date) => ({
+		date,
+		amount: dateToAmountMap[date],
+		items: expenseData.filter((expense) => expense.date === date),
+		// i want like this 6 th Jul,
+		month: new Date(date).toLocaleString("en-IN", {
+			day: "numeric",
+			month: "short",
+		}),
 	}));
 	return chartData;
 };
