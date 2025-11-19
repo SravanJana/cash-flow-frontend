@@ -14,6 +14,7 @@ function Category() {
 	const [openAddCategoryModal, setOpenAddCategoryModal] = useState(false);
 	const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(null);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const fetchCategories = useCallback(async () => {
 		// API call to fetch categories
 		if (loading) return;
@@ -39,6 +40,8 @@ function Category() {
 	}, [fetchCategories]);
 
 	const handleAddCategory = async (newCategory) => {
+		if (isSubmitting) return; // Prevent duplicate submissions
+
 		const { name, type, icon } = newCategory;
 		if (name.trim() === "" || type.trim() === "" || icon.trim() === "") {
 			toast.error("Please fill all the fields");
@@ -54,6 +57,7 @@ function Category() {
 			return;
 		}
 
+		setIsSubmitting(true);
 		try {
 			const response = await axiosConfig.post(
 				API_ENDPOINTS.ADD_CATEGORY,
@@ -69,6 +73,8 @@ function Category() {
 			toast.error(
 				error.response?.data?.message || "Failed to add category"
 			);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
@@ -78,11 +84,14 @@ function Category() {
 		console.log("Editing Category", category);
 	};
 	const handleUpdateCategory = async (updatedCategory) => {
+		if (isSubmitting) return; // Prevent duplicate submissions
+
 		const { name, type, icon } = updatedCategory;
 		if (name.trim() === "" || type.trim() === "" || icon.trim() === "") {
 			toast.error("Please fill all the fields");
 			return;
 		}
+		setIsSubmitting(true);
 		try {
 			const response = await axiosConfig.put(
 				API_ENDPOINTS.UPDATE_CATEGORY(selectedCategory.id),
@@ -99,6 +108,8 @@ function Category() {
 			toast.error(
 				error.response?.data?.message || "Failed to update category"
 			);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 
@@ -130,7 +141,10 @@ function Category() {
 					onClose={() => setOpenAddCategoryModal(false)}
 					title="Add  Category"
 				>
-					<AddCategoryForm onAddCategory={handleAddCategory} />
+					<AddCategoryForm
+						onAddCategory={handleAddCategory}
+						isSubmitting={isSubmitting}
+					/>
 				</Modal>
 
 				{/* Updating category Modal */}
@@ -147,6 +161,7 @@ function Category() {
 						onAddCategory={handleUpdateCategory}
 						isEditing={true}
 						initialCategoryData={selectedCategory}
+						isSubmitting={isSubmitting}
 					/>
 				</Modal>
 			</div>

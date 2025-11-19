@@ -14,6 +14,7 @@ function Income() {
 	const [incomeData, setIncomeData] = useState([]);
 	const [categories, setCategories] = useState([]);
 	const [loading, setLoading] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const [openAddIncomeModal, setOpenAddIncomeModal] = useState(false);
 	const [openDeleteAlert, setOpenDeleteAlert] = useState({
@@ -59,6 +60,8 @@ function Income() {
 	}, []);
 
 	const handleAddIncome = async (income) => {
+		if (isSubmitting) return; // Prevent duplicate submissions
+
 		const { name, amount, date, icon, categoryId } = income;
 		if (!name.trim()) {
 			toast.error("Please enter a name`");
@@ -87,6 +90,7 @@ function Income() {
 			return;
 		}
 
+		setIsSubmitting(true);
 		try {
 			const response = await axiosConfig.post(API_ENDPOINTS.ADD_INCOME, {
 				name,
@@ -105,6 +109,8 @@ function Income() {
 			toast.error(
 				error.response?.data?.message || "Failed to add income"
 			);
+		} finally {
+			setIsSubmitting(false);
 		}
 	};
 	const deleteIncome = async (incomeId) => {
@@ -201,6 +207,7 @@ function Income() {
 						<AddIncomeForm
 							onAddIncome={handleAddIncome}
 							categories={categories}
+							isSubmitting={isSubmitting}
 						/>
 					</Modal>
 

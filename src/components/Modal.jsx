@@ -16,7 +16,7 @@ function Modal({ children, onClose, isOpen, title }) {
 						<button
 							onClick={onClose}
 							type="button"
-							className="text-black font-bold  bg-red-200 hover:bg-red-400 hover:text-black-700 rounded-lg text-sm w-9 h-9 inline-flex items-center transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-blue-500 focus:ring-offset-2  justify-center  "
+							className="text-red-700 font-bold bg-red-100/50  hover:bg-red-100 hover:text-black-700 rounded-lg text-sm w-9 h-9 inline-flex items-center transition-colors duration-200 cursor-pointer focus:outline-none focus:ring-blue-500 focus:ring-offset-2  justify-center  "
 						>
 							<X className="w-5 h-5 "  size={15}/>
 						</button>

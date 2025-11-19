@@ -32,7 +32,7 @@ function CustomLineChart({ data }) {
 					</div>
 					<div className="space-y-2">
 						<h3 className="text-lg font-semibold text-gray-700">
-							No Income Data Yet
+							No Expense Data Yet
 						</h3>
 						<p className="text-sm text-gray-500 max-w-xs mx-auto">
 							Start tracking your income to see beautiful insights

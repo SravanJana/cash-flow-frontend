@@ -3,14 +3,17 @@ import Input from "./Input";
 import EmojiPickerPopup from "./EmojiPickerPopup";
 import { LoaderCircle } from "lucide-react";
 
-function AddCategoryForm({ onAddCategory, isEditing, initialCategoryData }) {
+function AddCategoryForm({
+	onAddCategory,
+	isEditing,
+	initialCategoryData,
+	isSubmitting,
+}) {
 	const [category, setCategory] = useState({
 		name: "",
 		type: "income",
 		icon: "",
 	});
-
-	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		if (isEditing && initialCategoryData) {
@@ -36,15 +39,8 @@ function AddCategoryForm({ onAddCategory, isEditing, initialCategoryData }) {
 		setCategory({ ...category, [field]: value });
 	};
 	const handleSubmit = async () => {
-		setLoading(true);
 		// You can add validation here if needed
-		try {
-			await onAddCategory(category);
-		} catch (error) {
-			console.error("Failed to add category", error);
-		} finally {
-			setLoading(false);
-		}
+		await onAddCategory(category);
 	};
 	return (
 		<div className="p-1  ">
@@ -79,8 +75,9 @@ function AddCategoryForm({ onAddCategory, isEditing, initialCategoryData }) {
 					onClick={handleSubmit}
 					type="button"
 					className="add-btn add-btn-fill"
+					disabled={isSubmitting}
 				>
-					{loading ? (
+					{isSubmitting ? (
 						<>
 							<LoaderCircle className="animate-spin h-5 w-5 text-black" />
 							{isEditing ? " Updating..." : " Adding..."}

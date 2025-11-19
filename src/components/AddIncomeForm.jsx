@@ -3,7 +3,7 @@ import EmojiPickerPopup from "./EmojiPickerPopup";
 import Input from "./Input";
 import { LoaderCircle } from "lucide-react";
 
-function AddIncomeForm({ onAddIncome, categories }) {
+function AddIncomeForm({ onAddIncome, categories, isSubmitting }) {
 	const [income, setIncome] = useState({
 		amount: "",
 		name: "",
@@ -11,7 +11,6 @@ function AddIncomeForm({ onAddIncome, categories }) {
 		icon: "",
 		categoryId: "",
 	});
-	const [loading, setLoading] = useState(false);
 
 	const categoryOptions = categories.map((category) => ({
 		value: category.id,
@@ -25,24 +24,17 @@ function AddIncomeForm({ onAddIncome, categories }) {
 	};
 
 	const handleAddIncome = async (income) => {
-		setLoading(true);
-		try {
-			await onAddIncome(income);
-		} catch (error) {
-			console.error("Failed to add income", error);
-		} finally {
-			setLoading(false);
-		}
+		await onAddIncome(income);
 	};
 
-    useEffect(() => {
-        if(categories.length > 0 && !income.categoryId) {
-            setIncome((prevIncome) => ({
-                ...prevIncome,
-                categoryId: categories[0].id,
-            }));
-        }
-    }, [categories, income.categoryId]);
+	useEffect(() => {
+		if (categories.length > 0 && !income.categoryId) {
+			setIncome((prevIncome) => ({
+				...prevIncome,
+				categoryId: categories[0].id,
+			}));
+		}
+	}, [categories, income.categoryId]);
 
 	return (
 		<div>
@@ -85,9 +77,9 @@ function AddIncomeForm({ onAddIncome, categories }) {
 				<button
 					onClick={() => handleAddIncome(income)}
 					className="add-btn add-tn-fill"
-					disabled={loading}
+					disabled={isSubmitting}
 				>
-					{loading ? (
+					{isSubmitting ? (
 						<>
 							<LoaderCircle className="animate-spin w-4 h-4" />
 							Adding...
