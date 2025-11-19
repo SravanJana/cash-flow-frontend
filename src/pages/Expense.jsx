@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Dashboard from "../components/Dashboard";
 import axiosConfig from "../Util/axiosConfig";
 import { API_ENDPOINTS } from "../Util/apiEndpoints";
@@ -21,7 +21,7 @@ function Expense() {
 		data: null,
 	});
 
-	const fetchExpenseData = async () => {
+	const fetchExpenseData = useCallback(async () => {
 		console.log("Inside fetchExpenseData");
 		if (loading) return;
 		setLoading(true);
@@ -42,8 +42,8 @@ function Expense() {
 		} finally {
 			setLoading(false);
 		}
-	};
-	const fetchExpenseCategories = async () => {
+	}, []);
+	const fetchExpenseCategories = useCallback(async () => {
 		try {
 			const response = await axiosConfig.get(
 				API_ENDPOINTS.CATEGORY_BY_TYPE("expense")
@@ -56,7 +56,7 @@ function Expense() {
 			console.error("Failed to fetch expense categories", error);
 			toast.error("Failed to fetch expense categories");
 		}
-	};
+	}, []);
 
 	const handleAddExpense = async (expense) => {
 		const { name, amount, date, icon, categoryId } = expense;
@@ -168,7 +168,7 @@ function Expense() {
 	useEffect(() => {
 		fetchExpenseData();
 		fetchExpenseCategories();
-	}, []);
+	}, [fetchExpenseData, fetchExpenseCategories]);
 
 	return (
 		<Dashboard activeMenu="Expense">

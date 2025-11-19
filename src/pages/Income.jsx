@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Dashboard from "../components/Dashboard";
 import axiosConfig from "../Util/axiosConfig";
 import { API_ENDPOINTS } from "../Util/apiEndpoints";
@@ -21,7 +21,7 @@ function Income() {
 		data: null,
 	});
 
-	const fetchIncomeData = async () => {
+	const fetchIncomeData = useCallback(async () => {
 		console.log("Inside fetchIncomeData");
 		if (loading) return;
 		setLoading(true);
@@ -42,8 +42,8 @@ function Income() {
 		} finally {
 			setLoading(false);
 		}
-	};
-	const fetchIncomeCategories = async () => {
+	}, []);
+	const fetchIncomeCategories = useCallback(async () => {
 		try {
 			const response = await axiosConfig.get(
 				API_ENDPOINTS.CATEGORY_BY_TYPE("income")
@@ -56,7 +56,7 @@ function Income() {
 			console.error("Failed to fetch income categories", error);
 			toast.error("Failed to fetch income categories");
 		}
-	};
+	}, []);
 
 	const handleAddIncome = async (income) => {
 		const { name, amount, date, icon, categoryId } = income;
@@ -146,30 +146,29 @@ function Income() {
 				error.response?.data?.message ||
 					"Failed to download income details"
 			);
-		} 
+		}
 	};
 
 	const handleEmailIncomeDetails = async () => {
-        try{
-            const response = await axiosConfig.get(
-                API_ENDPOINTS.EMAIL_INCOME,
-            );
-            if(response.status === 200){
-                console.log("Email Response ", response.data);
-                toast.success("Income details emailed successfully");
-            }
-        } catch (error) {
-            console.error("Failed to email income details", error);
-            toast.error(
-                error.response?.data?.message || "Failed to email income details"
-            );
-        }
+		try {
+			const response = await axiosConfig.get(API_ENDPOINTS.EMAIL_INCOME);
+			if (response.status === 200) {
+				console.log("Email Response ", response.data);
+				toast.success("Income details emailed successfully");
+			}
+		} catch (error) {
+			console.error("Failed to email income details", error);
+			toast.error(
+				error.response?.data?.message ||
+					"Failed to email income details"
+			);
+		}
 	};
 
 	useEffect(() => {
 		fetchIncomeData();
 		fetchIncomeCategories();
-	}, []);
+	}, [fetchIncomeData, fetchIncomeCategories]);
 
 	return (
 		<Dashboard activeMenu="Income">

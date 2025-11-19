@@ -14,16 +14,21 @@ function IncomeOverview({ transactions, onAddIncome }) {
 	}, [transactions]);
 	return (
 		<div className="card">
-			<div className="flex items-center justify-between">
+			<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-0">
 				<div>
-					<h5 className="text-lg font-semibold">Income Overview</h5>
-					<p className="text-sm text-gray-400 mt-0.5">
+					<h5 className="text-base sm:text-lg font-semibold">
+						Income Overview
+					</h5>
+					<p className="text-xs sm:text-sm text-gray-400 mt-0.5">
 						Track your earnings over time and analyze your income
 						trends.
 					</p>
 				</div>
-				<button onClick={onAddIncome} className="add-btn">
-					<Plus size={16} className="text-lg" />
+				<button
+					onClick={onAddIncome}
+					className="add-btn text-sm sm:text-base"
+				>
+					<Plus size={16} className="sm:text-lg" />
 					Add Income
 				</button>
 			</div>

@@ -16,7 +16,7 @@ function TransactionInfoCard({
 	onDelete,
 }) {
 	const getAmountStyles = () =>
-		type === "income"
+		type === "income" || type === "Income" 
 			? "bg-green-50 text-green-800"
 			: "bg-red-50 text-red-800";
 	return (
@@ -49,10 +49,10 @@ function TransactionInfoCard({
 						className={`flex items-center gap-2 px-3 py-1.5 rounded-md ${getAmountStyles()}`}
 					>
 						<h6 className="text-xs font-medium">
-							{type === "income" ? "+" : "-"}₹
+							{type === "income" || type === "Income"  ? "+" : "-"}₹
 							{addThousandsSeparator(amount)}
 						</h6>
-						{type === "income" ? (
+						{type === "income" || type === "Income" ? (
 							<TrendingUp size={15} className="text-green-600" />
 						) : (
 							<TrendingDown size={15} className="text-red-600" />

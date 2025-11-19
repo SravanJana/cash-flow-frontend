@@ -8,6 +8,8 @@ import Filter from "./pages/Filter";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Expense from "./pages/Expense";
+import Landing from "./pages/Landing";
+import NotFound from "./pages/NotFound";
 import AppContextProvider from "./context/AppContext";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -19,10 +21,7 @@ function App() {
 			<AppContextProvider>
 				<BrowserRouter>
 					<Routes>
-						<Route
-							path="/"
-							element={<Navigate to="/dashboard" replace />}
-						/>
+						<Route path="/" element={<Landing />} />
 						<Route path="/login" element={<Login />} />
 						<Route path="/signup" element={<Signup />} />
 						<Route
@@ -65,6 +64,7 @@ function App() {
 								</ProtectedRoute>
 							}
 						/>
+						<Route path="*" element={<NotFound />} />
 					</Routes>
 				</BrowserRouter>
 			</AppContextProvider>

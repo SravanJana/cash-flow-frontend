@@ -1,5 +1,5 @@
-// export const BASE_URL = "https://cash-flow-ri25.onrender.com/api/v1";
-export const BASE_URL = "http://localhost:8080/api/v1";
+export const BASE_URL = "https://cash-flow-ri25.onrender.com/api/v1";
+// export const BASE_URL = "http://localhost:8080/api/v1";
 
 const CLOUDINARY_CLOUD_NAME = "dkqijfkxl";
 
@@ -20,5 +20,7 @@ export const API_ENDPOINTS = {
 	DELETE_EXPENSE: (expenseId) => `/expenses/${expenseId}`,
 	EXPENSE_EXCEL_DOWNLOAD: "/excel/download/expenses",
 	EMAIL_EXPENSE: "/excel/email/expenses",
+	APPLY_FILTER: "/filter",
+	DASHBOARD_DATA: "/dashboard",
 	UPLOAD_IMAGE: `https://api.cloudinary.com/v1_1/${CLOUDINARY_CLOUD_NAME}/image/upload`,
 };

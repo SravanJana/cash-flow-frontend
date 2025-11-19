@@ -7,6 +7,7 @@ import { AppContext } from "../context/AppContext.jsx";
 import toast from "react-hot-toast";
 import { validateEmail } from "../Util/validation.js";
 import { LoaderCircle } from "lucide-react";
+import Navbar from "../components/Navbar.jsx";
 
 function Login() {
 	const [fullName, setFullName] = useState("");
@@ -44,7 +45,7 @@ function Login() {
 			if (token) {
 				localStorage.setItem("token", token);
 				setUser(User);
-                console.log(`User Data ` +  User)
+				console.log(`User Data ` + User);
 				navigate("/dashboard");
 			}
 		} catch (error) {
@@ -64,69 +65,79 @@ function Login() {
 	};
 
 	return (
-		<div className="h-screen w-full relative flex items-center justify-center overflow-hidden">
-			{/* Background image (place file in src/assets, e.g., background.jpg) */}
+		<div className="min-h-screen w-full relative">
+			{/* Background Image */}
 			<img
 				src={assets.login_bg}
 				alt="Background"
-				className="absolute inset-0 w-full h-full object-cover  filter blur-xs object-bottom-right"
+				className="absolute inset-0 w-full h-full object-cover filter blur-xs object-bottom-right"
 			/>
 
-			<div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-8 max-h-[95vh] overflow-y-auto">
-				<h3 className="text-2xl font-semibold text-black text-center mb-2">
-					Welcome Back
-				</h3>
-				<p className="text-sm text-slate-700 text-center mb-8">
-					Please enter your credentials to access your account.
-				</p>
+			{/* Content Overlay */}
+			<div className="relative z-10">
+				<Navbar />
 
-				<form onSubmit={handleSubmit} className="space-y-4">
-					<Input
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						placeholder="fullname@example.com"
-						label="Email Address"
-						type="text"
-					/>
-
-					<Input
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						placeholder="********"
-						label="Password"
-						type="password"
-					/>
-					{error && (
-						<p className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
-							{error}
+				{/* Login Form Section */}
+				<div className="flex items-center justify-center px-4 py-8 sm:py-12 min-h-[calc(100vh-4rem)]">
+					<div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-6 sm:p-8 w-full max-w-md">
+						<h3 className="text-xl sm:text-2xl font-semibold text-black text-center mb-2">
+							Welcome Back
+						</h3>
+						<p className="text-sm text-slate-700 text-center mb-8">
+							Please enter your credentials to access your
+							account.
 						</p>
-					)}
-					<button
-						className={`btn-primary w-full py-3 text-lg font-medium flex items-center justify-center gap-2 ${
-							loading ? "opacity-50 cursor-not-allowed" : ""
-						} bg-purple-500 rounded-xl hover:bg-purple-600 transition-colors text-white`}
-						type="submit"
-						disabled={loading}
-					>
-						{loading ? (
-							<>
-								<LoaderCircle className="animate-spin w-5 h-5" />
-								LOGGING IN...
-							</>
-						) : (
-							"LOG IN"
-						)}
-					</button>
-					<p className="text-sm text-slate-800 text-center mt-6">
-						Don't have an account?
-						<Link
-							to="/signup"
-							className="font-medium text-primary underline hover:text-primary-dark transition-colors"
-						>
-							Sign Up
-						</Link>
-					</p>
-				</form>
+						<form onSubmit={handleSubmit} className="space-y-4">
+							<Input
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								placeholder="fullname@example.com"
+								label="Email Address"
+								type="text"
+							/>
+
+							<Input
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								placeholder="********"
+								label="Password"
+								type="password"
+							/>
+							{error && (
+								<p className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
+									{error}
+								</p>
+							)}
+							<button
+								className={`btn-primary w-full py-2.5 sm:py-3 text-base sm:text-lg font-medium flex items-center justify-center gap-2 ${
+									loading
+										? "opacity-50 cursor-not-allowed"
+										: ""
+								} bg-purple-500 rounded-xl hover:bg-purple-600 transition-colors text-white`}
+								type="submit"
+								disabled={loading}
+							>
+								{loading ? (
+									<>
+										<LoaderCircle className="animate-spin w-5 h-5" />
+										LOGGING IN...
+									</>
+								) : (
+									"LOG IN"
+								)}
+							</button>
+							<p className="text-sm text-slate-800 text-center mt-6">
+								Don't have an account?
+								<Link
+									to="/signup"
+									className="font-medium text-primary underline hover:text-primary-dark transition-colors"
+								>
+									Sign Up
+								</Link>
+							</p>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	);

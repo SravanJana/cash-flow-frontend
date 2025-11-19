@@ -1,11 +1,13 @@
 import login_bg from "./login_bg.jpg";
 import piggy_bank from "./piggy-bank.png";
 import cash_image from "./Cash Image.png";
+import home_image from "./Home Image.png"
 import { Coins, Filter, FunnelPlus, LayoutDashboard, List, Wallet } from "lucide-react";
 export const assets = {
 	login_bg,
 	piggy_bank,
 	cash_image,
+	home_image,
 };
 
 export const SIDE_BAR_DATA = [

@@ -1,7 +1,7 @@
 import { Plus, PlusIcon } from "lucide-react";
 import Dashboard from "../components/Dashboard";
 import CategoryList from "../components/CategoryList";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import axiosConfig from "../Util/axiosConfig";
 import { API_ENDPOINTS } from "../Util/apiEndpoints";
 import toast from "react-hot-toast";
@@ -14,7 +14,7 @@ function Category() {
 	const [openAddCategoryModal, setOpenAddCategoryModal] = useState(false);
 	const [openEditCategoryModal, setOpenEditCategoryModal] = useState(false);
 	const [selectedCategory, setSelectedCategory] = useState(null);
-	const fetchCategories = async () => {
+	const fetchCategories = useCallback(async () => {
 		// API call to fetch categories
 		if (loading) return;
 		setLoading(true);
@@ -32,11 +32,11 @@ function Category() {
 		} finally {
 			setLoading(false);
 		}
-	};
+	}, []);
 
 	useEffect(() => {
 		fetchCategories();
-	}, []);
+	}, [fetchCategories]);
 
 	const handleAddCategory = async (newCategory) => {
 		const { name, type, icon } = newCategory;
@@ -73,21 +73,21 @@ function Category() {
 	};
 
 	const handleEditCategory = (category) => {
-        setSelectedCategory(category);
+		setSelectedCategory(category);
 		setOpenEditCategoryModal(true);
-        console.log("Editing Category", category);
+		console.log("Editing Category", category);
 	};
 	const handleUpdateCategory = async (updatedCategory) => {
-        const { name, type, icon } = updatedCategory;
-        if (name.trim() === "" || type.trim() === "" || icon.trim() === "") {
-            toast.error("Please fill all the fields");
-            return;
-        }
-        try {
-            const response = await axiosConfig.put(
-                API_ENDPOINTS.UPDATE_CATEGORY(selectedCategory.id),
-                { name, type, icon }
-            );
+		const { name, type, icon } = updatedCategory;
+		if (name.trim() === "" || type.trim() === "" || icon.trim() === "") {
+			toast.error("Please fill all the fields");
+			return;
+		}
+		try {
+			const response = await axiosConfig.put(
+				API_ENDPOINTS.UPDATE_CATEGORY(selectedCategory.id),
+				{ name, type, icon }
+			);
 			if (response.status === 200) {
 				toast.success("Category updated successfully");
 				setOpenEditCategoryModal(false);
@@ -143,7 +143,11 @@ function Category() {
 					}}
 					title="Edit Category"
 				>
-					<AddCategoryForm onAddCategory={handleUpdateCategory} isEditing={true} initialCategoryData={selectedCategory} />
+					<AddCategoryForm
+						onAddCategory={handleUpdateCategory}
+						isEditing={true}
+						initialCategoryData={selectedCategory}
+					/>
 				</Modal>
 			</div>
 		</Dashboard>

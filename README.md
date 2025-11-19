@@ -1,16 +1,160 @@
-# React + Vite
+# Cash Flow - Smart Financial Management Made Easy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Cash Flow Banner](./public/vite.svg)
 
-Currently, two official plugins are available:
+Cash Flow is a modern, intuitive financial management application that helps you take control of your finances. Track income, manage expenses, categorize transactions, and visualize your financial health with beautiful charts and analytics.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## ✨ Features
 
-## React Compiler
+-   📊 **Dashboard Overview** - Get a complete snapshot of your financial health
+-   💰 **Income Tracking** - Monitor all income sources in one place
+-   💸 **Expense Management** - Track and categorize your expenses
+-   📈 **Visual Analytics** - Beautiful charts and graphs for data visualization
+-   🏷️ **Custom Categories** - Create and manage your own transaction categories
+-   🔍 **Advanced Filtering** - Filter transactions by date, category, and more
+-   👤 **User Profiles** - Personalized experience with profile photos
+-   📧 **Email Reports** - Send financial reports directly to your email
+-   🔒 **Secure Authentication** - Protected routes and secure data handling
+-   📱 **Responsive Design** - Works seamlessly on desktop and mobile devices
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Getting Started
 
-## Expanding the ESLint configuration
+### Prerequisites
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-   Node.js (v16 or higher)
+-   npm or yarn
+-   A backend API server (configure the base URL in `axiosConfig.jsx`)
+
+### Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/yourusername/cash-flow.git
+    cd cash-flow
+    ```
+
+2. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+3. Configure your API endpoint:
+
+    - Open `src/Util/axiosConfig.jsx`
+    - Update the `baseURL` to point to your backend server
+
+4. Start the development server:
+
+    ```bash
+    npm run dev
+    ```
+
+5. Open your browser and navigate to `http://localhost:5173`
+
+## 📦 Built With
+
+-   **React** - Frontend framework
+-   **Vite** - Build tool and dev server
+-   **React Router** - Client-side routing
+-   **Axios** - HTTP client
+-   **Recharts** - Data visualization
+-   **Tailwind CSS** - Styling
+-   **Lucide React** - Icon library
+-   **React Hot Toast** - Toast notifications
+-   **date-fns** - Date utilities
+
+## 🏗️ Project Structure
+
+```
+cash-flow/
+├── public/
+├── src/
+│   ├── assets/          # Images and static assets
+│   ├── components/      # Reusable React components
+│   ├── context/         # React Context (App state)
+│   ├── pages/           # Page components
+│   ├── Util/            # Utility functions and configs
+│   ├── App.jsx          # Main app component
+│   ├── main.jsx         # Entry point
+│   └── index.css        # Global styles
+├── index.html
+├── package.json
+├── vite.config.js
+└── README.md
+```
+
+## 🎨 Key Components
+
+-   **Dashboard** - Main layout wrapper with sidebar and menubar
+-   **Navbar/Menubar** - Navigation components for public and authenticated users
+-   **InfoCard** - Display financial metrics
+-   **Charts** - Pie charts and line charts for data visualization
+-   **Modal** - Reusable modal component
+-   **Forms** - Add income, expense, and category forms
+-   **Footer** - Landing page footer with links
+
+## 🔧 Available Scripts
+
+-   `npm run dev` - Start development server
+-   `npm run build` - Build for production
+-   `npm run preview` - Preview production build
+-   `npm run lint` - Run ESLint
+
+## 🌐 Pages
+
+-   `/` - Landing page with features and information
+-   `/login` - User login
+-   `/signup` - User registration
+-   `/dashboard` - Main dashboard with financial overview
+-   `/income` - Income management
+-   `/expense` - Expense management
+-   `/category` - Category management
+-   `/filter` - Advanced transaction filtering
+
+## 🔐 Authentication
+
+The app uses JWT-based authentication. Tokens are stored in localStorage and automatically attached to API requests via Axios interceptors.
+
+## 📝 API Integration
+
+Configure your API endpoints in `src/Util/apiEndpoints.js`. The app expects the following endpoints:
+
+-   Authentication: `/login`, `/register`
+-   Dashboard: `/dashboard-data`
+-   Income: `/income`, `/income/categories`
+-   Expense: `/expense`, `/expense/categories`
+-   Categories: `/categories`, `/categories/type/:type`
+
+## 🎯 Future Enhancements
+
+-   [ ] Budget planning and alerts
+-   [ ] Recurring transactions
+-   [ ] Multi-currency support
+-   [ ] Export to CSV/PDF
+-   [ ] Mobile app (React Native)
+-   [ ] Dark mode
+-   [ ] Two-factor authentication
+
+## 👥 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🤝 Support
+
+For support, email support@cashflow.com or open an issue in the GitHub repository.
+
+## 🙏 Acknowledgments
+
+-   Icons by [Lucide](https://lucide.dev/)
+-   UI inspiration from modern fintech applications
+-   Charts powered by [Recharts](https://recharts.org/)
+
+---
+
+Made with ❤️ by the Cash Flow Team
