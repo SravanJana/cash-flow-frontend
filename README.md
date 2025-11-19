@@ -1,7 +1,6 @@
 # Cash Flow - Smart Financial Management Made Easy
 
-![Cash Flow Banner](./public/vite.svg)
-
+## 💡 Overview
 Cash Flow is a modern, intuitive financial management application that helps you take control of your finances. Track income, manage expenses, categorize transactions, and visualize your financial health with beautiful charts and analytics.
 
 ## ✨ Features
@@ -126,35 +125,3 @@ Configure your API endpoints in `src/Util/apiEndpoints.js`. The app expects the 
 -   Income: `/income`, `/income/categories`
 -   Expense: `/expense`, `/expense/categories`
 -   Categories: `/categories`, `/categories/type/:type`
-
-## 🎯 Future Enhancements
-
--   [ ] Budget planning and alerts
--   [ ] Recurring transactions
--   [ ] Multi-currency support
--   [ ] Export to CSV/PDF
--   [ ] Mobile app (React Native)
--   [ ] Dark mode
--   [ ] Two-factor authentication
-
-## 👥 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-## 📄 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-## 🤝 Support
-
-For support, email support@cashflow.com or open an issue in the GitHub repository.
-
-## 🙏 Acknowledgments
-
--   Icons by [Lucide](https://lucide.dev/)
--   UI inspiration from modern fintech applications
--   Charts powered by [Recharts](https://recharts.org/)
-
----
-
-Made with ❤️ by the Cash Flow Team
