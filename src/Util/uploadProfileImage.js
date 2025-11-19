@@ -1,6 +1,6 @@
 import { API_ENDPOINTS } from "./apiEndpoints";
 
-const CLOUDINARY_UPLOAD_PRESET = "moneymanger";
+const CLOUDINARY_UPLOAD_PRESET = import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET;
 
 const uploadProfileImage = async (imageFile) => {
 	const formData = new FormData();
