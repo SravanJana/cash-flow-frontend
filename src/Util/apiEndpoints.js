@@ -6,6 +6,7 @@ const CLOUDINARY_CLOUD_NAME = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME;
 export const API_ENDPOINTS = {
 	LOGIN: "/login",
 	REGISTER: "/register",
+	GOOGLE_AUTH: "/auth/google",
 	GET_ALL_CATEGORIES: "/categories",
 	ADD_CATEGORY: "/categories",
 	UPDATE_CATEGORY: (categoryId) => `/categories/${categoryId}`,

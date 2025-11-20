@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import { validateEmail } from "../Util/validation.js";
 import { LoaderCircle } from "lucide-react";
 import Navbar from "../components/Navbar.jsx";
+import { GoogleOAuthProvider, GoogleLogin } from "@react-oauth/google";
+import { API_ENDPOINTS } from "../Util/apiEndpoints.js";
 
 function Login() {
 	const [fullName, setFullName] = useState("");
@@ -64,82 +66,139 @@ function Login() {
 		}
 	};
 
+	const handleGoogleLoginSuccess = async (credentialResponse) => {
+		setLoading(true);
+		setError("");
+
+		try {
+			// Send the Google ID token to your backend
+			const response = await axiosConfig.post(API_ENDPOINTS.GOOGLE_AUTH, {
+				credential: credentialResponse.credential,
+			});
+
+			const { token, user } = response.data;
+			if (token) {
+				localStorage.setItem("token", token);
+				setUser(user);
+				toast.success("Successfully logged in with Google!");
+				navigate("/dashboard");
+			}
+		} catch (error) {
+			console.error("Google login error:", error);
+			setError(
+				error.response?.data?.error ||
+					"Google login failed. Please try again."
+			);
+			toast.error("Google login failed");
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleGoogleLoginError = () => {
+		setError("Google login failed. Please try again.");
+		toast.error("Google login failed");
+	};
+
 	return (
-		<div className="min-h-screen w-full relative">
-			{/* Background Image */}
-			<img
-				src={assets.login_bg}
-				alt="Background"
-				className="absolute inset-0 w-full h-full object-cover filter blur-xs object-bottom-right"
-			/>
+		<GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+			<div className="min-h-screen w-full relative">
+				{/* Background Image */}
+				<img
+					src={assets.login_bg}
+					alt="Background"
+					className="absolute inset-0 w-full h-full object-cover filter blur-xs object-bottom-right"
+				/>
 
-			{/* Content Overlay */}
-			<div className="relative z-10">
-				<Navbar />
+				{/* Content Overlay */}
+				<div className="relative z-10">
+					<Navbar />
 
-				{/* Login Form Section */}
-				<div className="flex items-center justify-center px-4 py-8 sm:py-12 min-h-[calc(100vh-4rem)]">
-					<div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-6 sm:p-8 w-full max-w-md">
-						<h3 className="text-xl sm:text-2xl font-semibold text-black text-center mb-2">
-							Welcome Back
-						</h3>
-						<p className="text-sm text-slate-700 text-center mb-8">
-							Please enter your credentials to access your
-							account.
-						</p>
-						<form onSubmit={handleSubmit} className="space-y-4">
-							<Input
-								value={email}
-								onChange={(e) => setEmail(e.target.value)}
-								placeholder="fullname@example.com"
-								label="Email Address"
-								type="text"
-							/>
-
-							<Input
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								placeholder="********"
-								label="Password"
-								type="password"
-							/>
-							{error && (
-								<p className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
-									{error}
-								</p>
-							)}
-							<button
-								className={`btn-primary w-full py-2.5 sm:py-3 text-base sm:text-lg font-medium flex items-center justify-center gap-2 ${
-									loading
-										? "opacity-50 cursor-not-allowed"
-										: ""
-								} bg-purple-500 rounded-xl hover:bg-purple-600 transition-colors text-white`}
-								type="submit"
-								disabled={loading}
-							>
-								{loading ? (
-									<>
-										<LoaderCircle className="animate-spin w-5 h-5" />
-										LOGGING IN...
-									</>
-								) : (
-									"LOG IN"
-								)}
-							</button>
-							<p className="text-sm text-slate-800 text-center mt-6">
-								Don't have an account?
-								<Link
-									to="/signup"
-									className="font-medium text-primary underline hover:text-primary-dark transition-colors"
-								>
-									Sign Up
-								</Link>
+					{/* Login Form Section */}
+					<div className="flex items-center justify-center px-4 py-8 sm:py-12 min-h-[calc(100vh-4rem)]">
+						<div className="bg-white bg-opacity-95 backdrop-blur-sm rounded-lg shadow-2xl p-6 sm:p-8 w-full max-w-md">
+							<h3 className="text-xl sm:text-2xl font-semibold text-black text-center mb-2">
+								Welcome Back
+							</h3>
+							<p className="text-sm text-slate-700 text-center mb-8">
+								Please enter your credentials to access your
+								account.
 							</p>
-						</form>
+							<form onSubmit={handleSubmit} className="space-y-4">
+								{/* Google Login Button */}
+								<div className="flex justify-center">
+									<GoogleLogin
+										onSuccess={handleGoogleLoginSuccess}
+										onError={handleGoogleLoginError}
+										size="large"
+										text="signin_with"
+										theme="outline"
+										shape="rectangular"
+										logo_alignment="left"
+									/>
+								</div>
+								{/* Divider */}
+								<div className="relative flex items-center justify-center my-6">
+									<div className="border-t border-gray-300 flex-grow"></div>
+									<span className="px-4 text-sm text-gray-500">
+										OR
+									</span>
+									<div className="border-t border-gray-300 flex-grow"></div>
+								</div>
+								<Input
+									value={email}
+									onChange={(e) => setEmail(e.target.value)}
+									placeholder="fullname@example.com"
+									label="Email Address"
+									type="text"
+								/>
+								<Input
+									value={password}
+									onChange={(e) =>
+										setPassword(e.target.value)
+									}
+									placeholder="********"
+									label="Password"
+									type="password"
+								/>
+								{error && (
+									<p className="text-red-500 text-sm text-center bg-red-50 p-2 rounded">
+										{error}
+									</p>
+								)}
+								<button
+									className={`btn-primary w-full py-2.5 sm:py-3 text-base sm:text-lg font-medium flex items-center justify-center gap-2 ${
+										loading
+											? "opacity-50 cursor-not-allowed"
+											: ""
+									} bg-purple-500 rounded-xl hover:bg-purple-600 transition-colors text-white`}
+									type="submit"
+									disabled={loading}
+								>
+									{loading ? (
+										<>
+											<LoaderCircle className="animate-spin w-5 h-5" />
+											LOGGING IN...
+										</>
+									) : (
+										"LOG IN"
+									)}
+								</button>
+								<p className="text-sm text-slate-800 text-center mt-6">
+									Don't have an account?
+									<Link
+										to="/signup"
+										className="font-medium text-primary underline hover:text-primary-dark transition-colors"
+									>
+										Sign Up
+									</Link>
+								</p>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</GoogleOAuthProvider>
 	);
 }
 

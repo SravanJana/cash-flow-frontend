@@ -15,6 +15,7 @@ const excludeEndpoints = [
 	"/status",
 	"/activate",
 	"/health",
+	"/auth/google",
 ];
 
 axiosConfig.interceptors.request.use(

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Dashboard from "../components/Dashboard";
 import axiosConfig from "../Util/axiosConfig";
 import { API_ENDPOINTS } from "../Util/apiEndpoints";
@@ -22,7 +22,7 @@ function Income() {
 		data: null,
 	});
 
-	const fetchIncomeData = useCallback(async () => {
+	const fetchIncomeData = async () => {
 		console.log("Inside fetchIncomeData");
 		if (loading) return;
 		setLoading(true);
@@ -43,8 +43,8 @@ function Income() {
 		} finally {
 			setLoading(false);
 		}
-	}, []);
-	const fetchIncomeCategories = useCallback(async () => {
+	};
+	const fetchIncomeCategories = async () => {
 		try {
 			const response = await axiosConfig.get(
 				API_ENDPOINTS.CATEGORY_BY_TYPE("income")
@@ -57,7 +57,7 @@ function Income() {
 			console.error("Failed to fetch income categories", error);
 			toast.error("Failed to fetch income categories");
 		}
-	}, []);
+	};
 
 	const handleAddIncome = async (income) => {
 		if (isSubmitting) return; // Prevent duplicate submissions
@@ -174,7 +174,7 @@ function Income() {
 	useEffect(() => {
 		fetchIncomeData();
 		fetchIncomeCategories();
-	}, [fetchIncomeData, fetchIncomeCategories]);
+	}, []);
 
 	return (
 		<Dashboard activeMenu="Income">
