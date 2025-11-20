@@ -6,7 +6,12 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
 	server: {
 		host: "0.0.0.0",
-        
+		historyApiFallback: true,
+	},
+	preview: {
+		port: 4173,
+		strictPort: true,
+		historyApiFallback: true,
 	},
 	plugins: [react(), tailwindcss()],
 });
