@@ -41,7 +41,6 @@ export const prepareIncomeLineChartData = (incomeData) => {
 		date,
 		amount: dateToAmountMap[date],
 		items: incomeData.filter((income) => income.date === date),
-		// i want like this 6 th Jul,
 		month: new Date(date).toLocaleString("en-IN", {
 			day: "numeric",
 			month: "short",
